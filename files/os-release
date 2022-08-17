@@ -1,0 +1,5 @@
+PORTABLE_PRETTY_NAME="Personal hidden git server"
+PORTABLE_ID=personal-git-server
+PRETTY_NAME=NixOS
+ID=nixos
+BUILD_ID=rolling

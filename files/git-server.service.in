@@ -1,0 +1,17 @@
+[Unit]
+Description=Git Daemon
+Documentation=man:git-daemon(1)
+
+[Service]
+ExecStart=@git@/bin/git daemon --reuseaddr --export-all --informative-errors --verbose --base-path=/var/lib/git /var/lib/git
+User=git
+Group=git
+DynamicUser=yes
+StateDirectory=git
+
+StandardOutput=inherit
+StandardError=journal
+SyslogIdentifier=git-daemon
+
+[Install]
+WantedBy=multi-user.target

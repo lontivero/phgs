@@ -1,0 +1,4 @@
+HiddenServiceDir /var/lib/tor/onion_service/
+HiddenServicePort 9418 127.0.0.1:9418
+HiddenServiceVersion 3
+

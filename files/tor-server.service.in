@@ -1,0 +1,15 @@
+[Unit]
+Description=Tor Daemon
+
+[Service]
+ExecStart=@tor@/bin/tor --torrc-file /etc/torrc --datadirectory $STATE_DIRECTORY
+StateDirectory=tor
+#Restart=always
+DynamicUser=yes
+User=tor
+
+SyslogIdentifier=tor-daemon
+
+[Install]
+WantedBy=multi-user.target
+
