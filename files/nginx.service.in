@@ -1,0 +1,26 @@
+[Unit]
+Description=The NGINX HTTP and reverse proxy server
+After=syslog.target network-online.target remote-fs.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+#PIDFile=/run/nginx/nginx.pid
+ExecStartPre=@nginx@/bin/nginx -t -c /etc/www-wasabito
+ExecStartPost=@coreutils@/bin/sleep 0.5
+ExecStart=@nginx@/bin/nginx -c /etc/www-wasabito
+ExecReload=@nginx@/bin/nginx -s reload -c /etc/www-wasabito
+#ExecStop=@coreutils@/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+PrivateNetwork=false
+User=nginx
+Group=nginx
+DynamicUser=yes
+LogsDirectory=nginx
+CacheDirectory=nginx
+RuntimeDirectory=nginx
+RuntimeDirectoryPreserve=yes
+
+[Install]
+WantedBy=multi-user.target
+

@@ -16,6 +16,9 @@
           name = "rootfs";
           tor = pkgs.tor;
           git = pkgs.git;
+          nginx = pkgs.nginx;
+          certbot = pkgs.certbot;
+          coreutils = pkgs.coreutils;
           buildCommand = ''
               # Prepare the portable service file-system layout
               mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/var/lib
@@ -23,14 +26,20 @@
               cp ${./files/os-release} $out/etc/os-release
 
               # Create the mount-point for the cert store
-              mkdir -p $out/var/{lib,log,cache}/{git,tor/onion_service}
+              mkdir -p $out/var/{lib,log,cache}/{nginx,git,tor/onion_service}
               ln -sf /var/lib/private/tor $out/var/lib/tor
               ln -sf /var/lib/private/git $out/var/lib/git 
+              ln -sf /var/lib/private/nginx $out/var/lib/nginx 
+              ln -sf /var/log/private/nginx $out/var/log/nginx 
+
+              mkdir -p $out/run/nginx
 
               # setup systemd units
               substituteAll ${./files/git-server.service.in} $out/etc/systemd/system/personal.git-server.service
               substituteAll ${./files/tor-server.service.in} $out/etc/systemd/system/personal.tor-server.service
+              substituteAll ${./files/nginx.service.in} $out/etc/systemd/system/personal.nginx.service
               cp ${./files/torrc.in} $out/etc/torrc
+              cp ${./files/site.in} $out/etc/www-wasabito
           '';
         };
 

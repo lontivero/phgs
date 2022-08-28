@@ -6,7 +6,7 @@ A minimalistic and reproducible, ready to deploy and immutable [git daemon](http
 
 This project contains a [Nix Flake](https://xeiaso.net/blog/series/nix-flakes) that once built generates a [systemd portable service](https://systemd.io/PORTABLE_SERVICES/) 
 (a single file under the name `personal.raw`) that can be "plug" to any Linux that supports systemd. The `personal.raw` file is just a 
-compressed read-only filesystem for Linux containing all what is needed (`git`, `tor` and all their dependencies, and the config files too)
+compressed read-only filesystem for Linux containing all what is needed (`git`, `tor`, `nginx` and all their dependencies, and the config files too)
 
 
 ## How to build
@@ -22,11 +22,12 @@ Then you have to "attach" the portable service to the systemd system:
 # portablectl attach --enable --now personal
 ```
 
-And that's it. You can verify both `personal.tor-server.service` and `personal.git-server.service` are working properly with:
+And that's it. You can verify `personal.tor-server.service`, `personal.git-server.service` and `personal.nginx.service` are working properly with:
 
 ```console
 systemctl status personal.tor-server.service
 systemctl status personal.git-server.service
+systemctl status personal.nginx.service
 ```
 
 **Note:** it is possible to browse the generated filesystem by building a different flake output called `rootfs`:

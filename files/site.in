@@ -1,0 +1,23 @@
+# /etc/www-wasabito
+
+worker_processes  1;
+
+events {
+  worker_connections  1024;
+}
+
+http
+{
+  server {
+    listen 8080;
+    listen [::]:8080;
+    server_name 127.0.0.1 192.168.100.116;
+
+    root        /var/lib/nginx;
+    charset     utf-8;
+
+    location / {
+    }
+  }
+}
+
